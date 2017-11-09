@@ -1,0 +1,227 @@
+[colors]
+; Base colors from .Xresources
+bg          =  ${xrdb:color0}
+bg-alt      =  ${xrdb:color0}
+fg          =  ${xrdb:foreground}
+fg-alt      =  ${xrdb:color8}
+red        =  ${xrdb:color4}
+red-alt    =  ${xrdb:color12}
+cyan        =  ${xrdb:color6}
+cyan-alt    =  ${xrdb:color14}
+white       =  ${xrdb:color7}
+white-alt = ${xrdb:color15}
+
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[bar/top]
+monitor   = eDP1
+bottom    = false
+width     = 1920
+height    = 35
+offset-x  = 0
+offset-y  = 0
+override-redirect = true
+wm-restack = bspwm
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+spacing = 0
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = FiraCode:size=12;3
+font-1 = FontAwesome:antialia=false:size=14;3
+font-2 = Material\-Design\-Iconic\-Font:antialia=false:size=15;3
+modules-left = home bspwm xtitle
+modules-center = date uptime
+modules-right = filesystem memory cpu temperature vpn wlan battery 
+
+[module/home]
+type = custom/text
+content = " %{T3}%{T-} "
+
+content-background = ${colors.red}
+content-foreground = ${colors.white}
+
+click-left = rofi -location 1 -width 20 -lines 2 -columns 2 -yoffset 34 -hide-scrollbar -show run
+
+[module/bspwm]
+type = internal/bspwm
+
+fuzzy-match = true
+
+ws-icon-0 = web;
+ws-icon-1 = code;
+ws-icon-2 = linux;
+ws-icon-3 = github;
+ws-icon-4 = cloud;
+ws-icon-5 = settings;
+ws-icon-6 = file;
+ws-icon-7 = lock;
+ws-icon-default = 
+
+label-focused = %icon%
+label-focused-foreground = ${colors.red}
+label-focused-background = ${colors.bg-alt}
+label-focused-padding = 1
+
+label-occupied = %icon%
+label-occupied-foreground = ${colors.cyan}
+label-occupied-background = ${colors.bg-alt}
+label-occupied-padding = 1
+
+label-urgent = %icon%
+label-urgent-foreground = ${colors.white}
+label-urgent-background = ${colors.red}
+label-urgent-padding = 1
+
+label-empty = %icon%
+label-empty-background = ${colors.bg-alt}
+label-empty-padding = 1
+
+[module/xtitle]
+type = internal/xwindow
+
+format-padding = 4
+label-maxlen = 30
+
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+
+interval = 10
+
+format-mounted = <label-mounted>
+format-mounted-prefix = 
+format-mounted-prefix-foreground = ${colors.cyan}
+label-mounted = " %free% "
+
+fixed-values = true
+spacing = 4
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = ""
+format-prefix-foreground = ${colors.cyan}
+label = " %percentage%% "
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = ""
+format-prefix-foreground = ${colors.cyan}
+label = " %gb_free% "
+
+[module/wlan]
+type = internal/network
+interface = wlo1
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = "%{T3}%{T-}"
+format-disconnected-prefix-foreground = ${colors.red}
+label-connected = "%essid% "
+label-disconnected = " "
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-0-foreground = ${colors.red-alt}
+ramp-signal-1-foreground = ${colors.cyan-alt}
+ramp-signal-2-foreground = ${colors.cyan-alt}
+ramp-signal-foreground = ${colors.cyan}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 100
+time-format = %H:%M
+label-discharging = "%percentage%% "
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full-prefix = ""
+format-full-prefix-foreground = ${colors.cyan}
+
+format-charging-prefix = " "
+format-charging-prefix-foreground = ${colors.cyan}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-0-foreground = ${colors.red}
+ramp-capacity-1-foreground = ${colors.red-alt}
+ramp-capacity-foreground = ${colors.cyan}
+label-charging = "%percentage%% "
+
+animation-charging-0 =  
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = ${colors.cyan}
+animation-charging-framerate = 750
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 70
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+
+label = "%temperature% "
+label-warn = " %temperature% "
+label-warn-foreground = ${colors.red}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.cyan}
+
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %a %d/%m/%Y"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+;format-prefix-foreground = ${colors.foreground-alt}
+;format-underline = #0a6cf5
+
+label = "%date%  %time%"
+
+[module/uptime]
+type = custom/script
+interval = 1200
+format = "<label> "
+format-prefix = " %{T3}%{T-} "
+;format-prefix-foreground = ${colors.cyan}
+exec = ~/.config/polybar/uptime
+
+[module/vpn]
+type = custom/script
+interval = 2
+label = " %output% "
+exec-if = pgrep -x openvpn
+format-prefix = "%{T3} %{T-}"
+format-prefix-foreground = ${colors.cyan}
+
+exec = ~/.config/polybar/vpn.sh

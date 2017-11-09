@@ -1,0 +1,31 @@
+#! /bin/sh
+sxhkd &
+wal -R
+#xrdb ~/.Xresources
+#feh --bg-scale ~/.wallpapers/solarized.jpg &
+compton &
+pulseaudio &
+dunst -conf /home/patrik/.config/dunst/dunstrc &
+polybar top &
+
+
+. "${HOME}/.cache/wal/colors.sh"
+bspc config normal_border_color "$color1"
+bspc config active_border_color "$color2"
+bspc config focused_border_color "$color15"
+bspc config presel_border_color "$color1"
+
+bspc monitor -d web code linux github cloud settings file
+
+bspc config border_width         1
+bspc config window_gap          30
+
+bspc config split_ratio          0.50
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config click_to_focus	 true
+bspc config focus_follows_pointer true
+bspc config top_padding 40
+
+#bspc rule -a Alacritty state=floating
+bspc rule -a Pinentry state=floating
